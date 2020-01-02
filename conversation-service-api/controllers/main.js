@@ -84,7 +84,8 @@ const deleteTopic = (req, res, db) => {
 const getQuestionList = (req, res, db) => {
     //db.select('*').from('conversation_questions')
     db.select('*').from('conversation_categories')
-    .join('conversation_questions', {'conversation_questions.category_id': 'conversation_categories.id'})
+    .innerJoin('conversation_questions', {'conversation_questions.category_id': 'conversation_categories.id'})
+    .innerJoin('conversation_topics', {'conversation_questions.topic_id': 'conversation_topics.id'})
     .then(items => {
       if(items.length){
         res.json(items)
